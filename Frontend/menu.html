@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Delivery Menu</title>
+    <link
+    href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css"
+    rel="stylesheet"
+  />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+        body {
+          font-family: "Poppins", sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar styling */
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            padding: 10px 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        nav .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        nav .logo img {
+            height: 50px;
+            width: 200px;
+        }
+
+        nav .title {
+            font-size: 2.5rem;
+            font-weight: 400;
+            color: #555;
+            text-align: center;
+            width: 100%;
+        }
+
+        nav .icons {
+            display: flex;
+            align-items: center;
+        }
+
+        nav .icons img {
+            width: 24px;
+            height: 24px;
+            margin-left: 15px;
+            cursor: pointer;
+        }
+
+        /* Filter section */
+        .filters {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+            background: #f5f5f5;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .filters input, .filters select {
+            padding: 10px;
+            font-size: 1em;
+            margin: 0 10px;
+        }
+
+        /* Food items section */
+        .items {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+
+        .item {
+            width: 200px;
+            background-color: #fff;
+            margin: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .item:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .item:hover {
+            transform: scale(1.05);
+        }
+
+        .item img {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .item-details {
+            margin-top: 10px;
+        }
+
+        .item-details h3 {
+            margin: 0;
+            font-size: 1.2em;
+        }
+
+        .item-details p {
+            margin: 5px 0;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        .item-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .counter {
+            display: flex;
+            align-items: center;
+        }
+
+        .counter button {
+            padding: 5px;
+            font-size: 1em;
+        }
+
+        .add-to-cart {
+            background-color: #ff7e5f;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .add-to-cart:hover {
+            background-color: #feb47b;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav>
+        <div class="logo">
+          <img src="./images/logo.png" alt="logo" />
+        </div>
+        <span class="title">Explore Menu</span>
+        <div class="icons">
+          <i class="bx bx-shopping-bag"></i>
+            <img src="user-icon.png" alt="User">
+        </div>
+    </nav>
+
+    <!-- Filter Section -->
+    <div class="filters">
+        <input type="text" id="restaurantSearch" placeholder="Search Restaurant">
+        <select id="categoryFilter">
+            <option value="">Filter by Category</option>
+            <option value="Chinese">Chinese</option>
+            <option value="Indian">Indian</option>
+            <option value="Italian">Italian</option>
+        </select>
+    </div>
+
+    <!-- Items Section -->
+    <div class="items" id="itemsContainer">
+        <!-- Items will be dynamically populated -->
+    </div>
+
+    <script>
+        // Mock Data
+        const products = [
+            {
+                name: "Pizza Margherita",
+                restaurant: "Italian Bistro",
+                rating: 4.5,
+                price: 10,
+                image: "pizza.jpg",
+                category: "Italian"
+            },
+            {
+                name: "Butter Chicken",
+                restaurant: "Tandoori Grill",
+                rating: 4.8,
+                price: 15,
+                image: "butter-chicken.jpg",
+                category: "Indian"
+            },
+            {
+                name: "Fried Rice",
+                restaurant: "Dragon House",
+                rating: 4.2,
+                price: 8,
+                image: "fried-rice.jpg",
+                category: "Chinese"
+            }
+        ];
+
+        const itemsContainer = document.getElementById("itemsContainer");
+        const restaurantSearch = document.getElementById("restaurantSearch");
+        const categoryFilter = document.getElementById("categoryFilter");
+
+        function renderItems(filterFunc = () => true) {
+            itemsContainer.innerHTML = "";
+            products.filter(filterFunc).forEach(product => {
+                const itemDiv = document.createElement("div");
+                itemDiv.className = "item";
+                itemDiv.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <div class="item-details">
+                        <h3>${product.name}</h3>
+                        <p>Served by: ${product.restaurant}</p>
+                        <p>Rating: ${product.rating}</p>
+                        <p>Price: $${product.price}</p>
+                    </div>
+                    <div class="item-actions">
+                        <div class="counter">
+                            <button onclick="decrement(event)">-</button>
+                            <span>0</span>
+                            <button onclick="increment(event)">+</button>
+                        </div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                `;
+                itemsContainer.appendChild(itemDiv);
+            });
+        }
+
+        function decrement(event) {
+            const span = event.target.nextElementSibling;
+            let count = parseInt(span.textContent);
+            if (count > 0) count--;
+            span.textContent = count;
+        }
+
+        function increment(event) {
+            const span = event.target.previousElementSibling;
+            let count = parseInt(span.textContent);
+            count++;
+            span.textContent = count;
+        }
+
+        restaurantSearch.addEventListener("input", () => {
+            const query = restaurantSearch.value.toLowerCase();
+            renderItems(product => product.restaurant.toLowerCase().includes(query));
+        });
+
+        categoryFilter.addEventListener("change", () => {
+            const category = categoryFilter.value;
+            renderItems(product => !category || product.category === category);
+        });
+
+        renderItems();
+    </script>
+
+</body>
+</html>

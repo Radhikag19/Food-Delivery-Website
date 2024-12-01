@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shopping Cart</title>
+<style>
+    body { font-family: Arial, sans-serif; }
+    .cart-container { max-width: 800px; margin: 0 auto; }
+    .cart-item { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px solid #ddd; }
+    .cart-item img { width: 80px; height: auto; margin-right: 20px; }
+    .cart-item-info { flex-grow: 1; }
+    .cart-item-name { font-size: 1.1em; font-weight: bold; }
+    .cart-item-quantity, .cart-item-price { font-size: 0.9em; color: #555; }
+    .total-price { text-align: right; font-size: 1.2em; font-weight: bold; margin-top: 20px; }
+    .proceed-btn { display: block; margin: 20px 0; padding: 10px; background-color: #ff9401; color: white; text-align: center; font-size: 1.1em; text-decoration: none; border-radius: 5px; }
+</style>
+</head>
+<body>
+
+<div class="cart-container">
+    <h1>Your Cart</h1>
+    <div id="cartItems"></div>
+    <div class="total-price" id="totalPrice"></div>
+    <a href="#" class="proceed-btn">Proceed to Payment</a>
+</div>
+
+<script>
+    // Sample items data (Replace this with data passed from homepage)
+    const itemsInCart = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+    function displayCartItems() {
+        const cartItemsContainer = document.getElementById('cartItems');
+        let total = 0;
+
+        cartItemsContainer.innerHTML = ''; // Clear previous items
+        itemsInCart.forEach(item => {
+            total += item.price * item.quantity;
+
+            cartItemsContainer.innerHTML += `
+                <div class="cart-item">
+                    <img src="${item.image}" alt="${item.name}">
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-quantity">Quantity: ${item.quantity}</div>
+                        <div class="cart-item-price">Price: $${item.price.toFixed(2)}</div>
+                    </div>
+                </div>
+            `;
+        });
+
+        document.getElementById('totalPrice').innerText = `Total Price: $${total.toFixed(2)}`;
+    }
+
+    // Display cart items when the page loads
+    window.onload = displayCartItems;
+</script>
+
+</body>
+</html>

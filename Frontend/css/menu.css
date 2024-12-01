@@ -1,0 +1,95 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background: #ffe8e4;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  line-height: 1.6;
+}
+
+/* Header Style */
+.header {
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header nav a {
+  color: #69697b;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+.header nav a:hover {
+  font-weight: 400;
+}
+
+/* Fancy Menu Title */
+.menu-title {
+  text-align: center;
+  margin: 50px 0 20px; /* Adding more space from top */
+  color: #69697b;
+  font-size: 2.5rem;
+  font-weight: 600;
+  text-transform: uppercase; /* For a bolder look */
+  letter-spacing: 2px; /* Adds some space between letters */
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to right, #ff7c7c, #ffb3b3); /* A subtle gradient for a fancy effect */
+  padding: 10px 0;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2); /* Adds some depth */
+}
+
+/* Products Style */
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
+}
+
+.product-card {
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 5px;
+  text-align: center;
+  width: 200px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+  transform: scale(1.05);
+}
+
+.product-card img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.product-card h3 {
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.product-card p {
+  color: #666;
+  margin: 5px 0;
+}
+
+/* Footer Style */
+.footer {
+  text-align: center;
+  padding: 10px 20px;
+  background: #333;
+  color: white;
+}
